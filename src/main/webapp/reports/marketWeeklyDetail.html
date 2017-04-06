@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>市场活动报表</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/touch.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/marketReport.css"/>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+    <script type="text/javascript" src="../js/GetQueryString.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/touch.js"></script>
+</head>
+<body onload="loadPopup()">
+<article class="nextSection">
+    <div class="slide_wrap">
+        <div id="viewport" class="viewport">
+            <section class="pageview step2">
+                <header>
+                    <h2>到店体验阶段</h2>
+                </header>
+                <div class="section section1">
+                    <ul class="lis">
+                        <li>
+                            <span class="bold">本日预约进店量</span>
+                            <span class="num"></span>
+                        </li>
+                        <li>
+                            <span class="bold">累计预约进店量</span>
+                            <span class="num"></span>
+                        </li>
+                        <li>
+                            <span class="bold">本日试驾完成率</span>
+                            <span class="num"></span>
+                        </li>
+                        <li>
+                            <span class="bold">累计试驾完成率</span>
+                            <span class="num"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="section section2">
+                    <h4 class="translate">预约进店量统计</h4>
+                    <div class="chart" id="intoStore1"></div>
+                </div>
+            </section>
+            <section class="pageview step3">
+                <header>
+                    <h2>客户跟进</h2>
+                </header>
+                <div class="section section1">
+                    <div class="head">
+                        <h4>当前各类数量</h4>
+                        <p class="gray">*截止当前各类意向客户的数量</p>
+                    </div>
+                    <table class="cur_table">
+                        <thead>
+                        <tr>
+                            <th>客户意向级别</th>
+                            <th>车型</th>
+                            <th>客户数量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="H">
+                            <td>H</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="A">
+                            <td>A</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="B">
+                            <td>B</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="C">
+                            <td>C</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td rowspan="2">H</td>
+                            <td>RDX</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>REX</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td></td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td></td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td></td>
+                            <td>100</td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                    <div class="pie" id="numPie"></div>
+                </div>
+                <div class="section section2">
+                    <div class="head">
+                        <h4>首次各类数量</h4>
+                        <p class="gray">*本日新增的各类意向客户数量</p>
+                    </div>
+                    <table class="cur_table">
+                        <thead>
+                        <tr>
+                            <th>客户意向级别</th>
+                            <th>车型</th>
+                            <th>客户数量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="H">
+                            <td>H</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="A">
+                            <td>A</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="B">
+                            <td>B</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="C">
+                            <td>C</td>
+                            <td colspan="2">
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td rowspan="2">H</td>
+                            <td>RDX</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>REX</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td></td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td></td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td></td>
+                            <td>100</td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                    <div class="pie" id="firstNum"></div>
+                    <p class="text">在当前市场活动中，为了提高客户意向，<strong>本日计划</strong>推送文章<span
+                            class="value"></span>人次，实际推送<span class="value"></span>人次。
+                    </p>
+                    <p class="text">目前为止，计划推送总数已达<span class="value"></span>人次，累计推送总数已达到<span
+                            class="value"></span>人次.
+                    </p>
+                </div>
+            </section>
+            <section class="pageview step4">
+                <header>
+                    <h2>成交阶段</h2>
+                </header>
+                <div class="section section1">
+                    <h4 class="translate">成交数量统计</h4>
+                    <div class="chart" id="dealNum"></div>
+                    <ul class="lis">
+                        <li>
+                            <span class="bold">本日成交数量</span>
+                            <span class="num">30</span>
+                        </li>
+                        <li>
+                            <span class="bold">累计成交数量</span>
+                            <span class="num">100</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="section section2">
+                    <div class="head">
+                        <h4> H/A/B/C各类成交比</h4>
+                        <p class="gray">*首次意向HABC的成交数量/HABC各类数量（首次）</p>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>H</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="proportion">
+                                    <span class="title">留档成交比</span>
+                                    <span class="num"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="proportion">
+                                    <span class="title">试驾成交比</span>
+                                    <span class="num"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <div class="pagenumber">
+            <div class="cur"></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</article>
+<div id="cover" style="display: none;">
+    <div class="post">
+        <div class="img_wrap">
+            <img class="narr" src="../images/narr.png"/>
+        </div>
+        <div class="tip">
+            <p>手指左右滑动来切换上一页、下一页</p>
+            <button class="btn">我知道了</button>
+        </div>
+    </div>
+</div>
+<script>
+    //点击按钮隐藏遮罩层
+    $('#cover').on('click', function () {
+        $('#cover').slideUp(300);
+    });
+    function get_cookie(Name) {
+        var search = Name + "=";
+        var returnvalue = "";
+        if (document.cookie.length > 0) {
+            offset = document.cookie.indexOf(search);
+            if (offset != -1) {
+                // if cookie exists
+                offset += search.length;
+                // set index of beginning of value
+                end = document.cookie.indexOf(";", offset);
+                // set index of end of cookie value
+                if (end == -1)
+                    end = document.cookie.length;
+                returnvalue = decodeURI(document.cookie.substring(offset, end));
+            }
+        }
+        return returnvalue;
+    }
+    function set_cookie(t) {
+        var oDate = new Date();
+        oDate.setYear(oDate.getFullYear() + t);
+        document.cookie = "firstload=true;expires=" + oDate.toGMTString();
+    }
+    function loadPopup() {
+        //console.log(get_cookie("firstload"));
+        if (get_cookie("firstload") === "") {
+            //document.cookie="firstload=true";
+            set_cookie(2);//2年过期
+            $('#cover').show();
+        }
+    }
+</script>
+<script>
+    $(function () {
+        var intoStore1Dom = document.getElementById('intoStore1'); //预约进店统计图
+        var intoStore1Chart = echarts.init(intoStore1Dom);
+        var numPieDom = document.getElementById('numPie'); //当前意向客户数量饼图
+        var numPieChart = echarts.init(numPieDom);
+        var firstNumDom = document.getElementById('firstNum'); //首次数量柱形图
+        var firstNumChart = echarts.init(firstNumDom);
+        var dealNumDom = document.getElementById('dealNum'); //成交数量统计图
+        var dealNumChart = echarts.init(dealNumDom);
+        var reportId = GetQueryString('reportId');
+
+        /*===到店体验阶段===*/
+        var $lis = $('.step2 .section1 .lis li');
+        ajax_fn('get',AIM_url.report+ '/testDriveWeek.do?marketActivityWeeklyReportId=' + reportId, '', testDriveWeek);
+        function testDriveWeek(data) {
+            console.log('到店体验--返回');
+            console.log(data);
+            var ratio1 = percentNum(data.appointments, data.archivesNumWeek);
+            var ratio2 = percentNum(data.totalAppointments, data.archivesNum);
+            $lis.eq(0).children('.num').html(data.appointments);
+            $lis.eq(1).children('.num').html(data.totalAppointments);
+            $lis.eq(2).children('.num').html(ratio1);
+            $lis.eq(3).children('.num').html(ratio2);
+            //预约进店量（总）
+            var intoStoreData1 = {
+                labelArr: [],
+                valArr: []
+            };
+            $.each(data.appointmentsList, function (i, v) {
+                intoStoreData1.labelArr.push('第' + (i + 1) + '天');
+                intoStoreData1.valArr.push(v);
+            });
+            intoStore1Chart.setOption(bar_option(intoStoreData1, '#ef4f4f', '预约进店量'));
+            //按车型统计(分车型试驾次数)
+            var i = 3;
+            for (var v_name in data.testDriveMap) {
+                //创建dom元素
+                var str = '<div class="section section' + i + '"><h4 class="translate">' + v_name + '试驾次数统计</h4><div class="chart" id="intoStore' + (i - 1) + '"></div></div>';
+                $('.step2').append(str);
+                var intoStoreDom = $('.step2 .section').eq(i - 1).find('.chart')[0];
+                var intoStoreChart = echarts.init(intoStoreDom);
+                var intoStoreData = {
+                    labelArr: [],
+                    valArr: []
+                };
+                for (var j = 0; j < data.testDriveMap[v_name].length; j++) {
+                    intoStoreData.labelArr.push('第' + (j + 1) + '天');
+                }
+                intoStoreData.valArr = data.testDriveMap[v_name];
+                intoStoreChart.setOption(bar_option(intoStoreData, '#ff6347', v_name + '试驾次数'));
+                i++;
+            }
+        }
+
+        /*===客户跟进===*/
+        var currentTrH = $('.viewport .step3 .section1 .H table tbody');
+        var currentTrA = $('.viewport .step3 .section1 .A table tbody');
+        var currentTrB = $('.viewport .step3 .section1 .B table tbody');
+        var currentTrC = $('.viewport .step3 .section1 .C table tbody');
+        var firstTrH = $('.viewport .step3 .section2 .H table tbody');
+        var firstTrA = $('.viewport .step3 .section2 .A table tbody');
+        var firstTrB = $('.viewport .step3 .section2 .B table tbody');
+        var firstTrC = $('.viewport .step3 .section2 .C table tbody');
+        var $text = $('.step3 .section2 .text');
+        ajax_fn('get', AIM_url.report+'/intentionCustomerCounts.do?marketActivityWeeklyReportId=' + reportId, '', intentionCustomer);
+        function intentionCustomer(data) {
+            console.log('客户跟进--返回');
+            console.log(data);
+            var currentList = data.currentCustomerList;
+            var firstList = data.firstTryCustomerList;
+            $text.eq(0).find('.value:eq(0)').text(data.push_plan_num_week);
+            $text.eq(0).find('.value:eq(1)').text(data.push_actual_num_week);
+            $text.eq(1).find('.value:eq(0)').text(data.push_plan_num);
+            $text.eq(1).find('.value:eq(1)').text(data.push_actual_num);
+            function setOptionData(list, TrH, TrA, TrB, TrC, pieChart) {
+                var currentTrHstr = '';
+                var currentTrAstr = '';
+                var currentTrBstr = '';
+                var currentTrCstr = '';
+                var totalNum = 0;
+                var HNum = 0;
+                var ANum = 0;
+                var BNum = 0;
+                var CNum = 0;
+                var currentData = [];
+                //表格
+                $.each(list, function (k, v) {
+                    totalNum += v.customerNumber;
+                    switch (v.levelOfIntention) {
+                        case 'H':
+                            currentTrHstr += '<tr><td>' + v.vehicleModel + '</td><td>' + v.customerNumber + '</td></tr>';
+                            HNum += v.customerNumber;
+                            break;
+                        case 'A':
+                            currentTrAstr += '<tr><td>' + v.vehicleModel + '</td><td>' + v.customerNumber + '</td></tr>';
+                            ANum += v.customerNumber;
+                            break;
+                        case 'B':
+                            currentTrBstr += '<tr><td>' + v.vehicleModel + '</td><td>' + v.customerNumber + '</td></tr>';
+                            BNum += v.customerNumber;
+                            break;
+                        case 'C':
+                            currentTrCstr += '<tr><td>' + v.vehicleModel + '</td><td>' + v.customerNumber + '</td></tr>';
+                            CNum += v.customerNumber;
+                            break;
+                    }
+                });
+                TrH.html(currentTrHstr);
+                TrA.html(currentTrAstr);
+                TrB.html(currentTrBstr);
+                TrC.html(currentTrCstr);
+                var nameArr = ['H', 'A', 'B', 'C'];
+                var valArr = [parseFloat(percentNum(HNum, totalNum)), parseFloat(percentNum(ANum, totalNum)), parseFloat(percentNum(BNum, totalNum)), parseFloat(percentNum(CNum, totalNum))];
+                console.log(valArr);
+                $.each(nameArr, function (i1, v1) {
+                    currentData.push({
+                        value: valArr[i1],
+                        name: v1 + ':' + valArr[i1]+'%'
+                    })
+                });
+                //step3饼图
+                pieChart.setOption(pie_option(currentData, '60%', 12));
+            }
+
+            setOptionData(currentList, currentTrH, currentTrA, currentTrB, currentTrC, numPieChart);//当前
+            setOptionData(firstList, firstTrH, firstTrA, firstTrB, firstTrC, firstNumChart);//首次
+        }
+
+        /*===成交阶段===*/
+        var $dealNumDom = $('.step4 .section1 .lis li');
+        var $dealTrDom = $('.step4 .section2 tbody tr');
+        ajax_fn('get', AIM_url.report+'/closingWeek.do?marketActivityWeeklyReportId=' + reportId, '', closingWeek);
+        function closingWeek(data) {
+            console.log('成交阶段--返回');
+            console.log(data);
+            var transactionRatio = data.transactionRatio; //客户意向级别
+            var VehicleModel = data.closingNumWeekVehicleModel; //成交统计列表（分车型）
+            //成交数量统计（总）
+            var closingNumWeek = data.closingNumWeekList;
+            var dealNumData = {
+                labelArr: [],
+                valArr: []
+            };
+            $.each(closingNumWeek, function (i, v) {
+                dealNumData.labelArr.push('第' + (i + 1) + '天');
+            });
+            dealNumData.valArr = closingNumWeek;
+            dealNumChart.setOption(bar_option(dealNumData, '#ef4f4f', '成交数量'));
+            $dealNumDom.eq(0).find('.num').text(data.closingNumWeek); //本周成交数量
+            $dealNumDom.eq(1).find('.num').text(data.closingNum);   //累计成交数量
+            //各类成交比
+            var ratio = 1;
+            $.each(transactionRatio, function (i, v) {
+                switch (v.levelOfIntention) {
+                    case 'H':
+                        ratio = percentNum(v.closingNumFirst,v.numFirst);
+                        $dealTrDom.eq(0).find('td:eq(0)').text(ratio);
+                        break;
+                    case 'A':
+                        ratio = percentNum(v.closingNumFirst,v.numFirst);
+                        $dealTrDom.eq(0).find('td:eq(1)').text(ratio);
+                        break;
+                    case 'B':
+                        ratio = percentNum(v.closingNumFirst,v.numFirst);
+                        $dealTrDom.eq(0).find('td:eq(2)').text(ratio);
+                        break;
+                    case 'C':
+                        ratio = percentNum(v.closingNumFirst,v.numFirst);
+                        $dealTrDom.eq(0).find('td:eq(3)').text(ratio);
+                        break;
+                }
+            });
+            var ratio1 = percentNum(data.closingNumWeek, data.archivesNumWeek); //留档成交比
+            var ratio2 = percentNum(data.closingNumWeek, data.appointments);   //试驾成交比
+            $dealTrDom.eq(1).find('.num').text(ratio1);
+            $dealTrDom.eq(2).find('.num').text(ratio2);
+            //各个车型成交数量
+            $.each(VehicleModel, function (i, v) {
+                var vehicleStr = '<div class="section section' + (i + 3) + '"><h4 class="translate">' + v.vehicleModel + '成交数量统计</h4><div class="chart" id="dealNum' + (i + 1) + '"></div><ul class="lis"><li><span class="bold">本日成交数量</span><span class="num">' + v.closingNumWeek + '</span></li><li><span class="bold">累计成交数量</span><span class="num">' + v.closingNum + '</span></li></ul></div>';
+                $('.step4').append(vehicleStr);
+                var dealNum1Dom = $('.step4 .section').eq(i + 2).find('.chart')[0];
+                var dealNum1Chart = echarts.init(dealNum1Dom);
+                dealNumData1 = {
+                    labelArr: [],
+                    valArr: []
+                };
+                $.each(v.closingNumWeekList, function (i1, v1) {
+                    dealNumData1.labelArr.push('第' + (i1 + 1) + '天');
+                });
+                dealNumData1.valArr = v.closingNumWeekList;
+                //console.log(dealNumData1);
+                dealNum1Chart.setOption(bar_option(dealNumData1, '#ff6347', '成交数量'));
+            })
+
+        }
+
+    });
+    //返回饼图的option
+    function pie_option(setData, radius, len) {
+        return {
+            color: ['#5ab1ef', '#b6a2de', '#2ec7c9', '#d87a80', '#ffb980'],
+            series: [
+                {
+                    name: '意向客户数量',
+                    type: 'pie',
+                    radius: radius,
+                    labelLine: {
+                        normal: {
+                            length: len
+                        }
+                    },
+                    data: setData
+                }
+            ]
+        }
+    }
+    //返回柱状图的option
+    function bar_option(setData, color, name) {
+        return {
+            color: [color],
+            xAxis: [
+                {
+                    splitLine: {
+                        show: false  //不显示竖分割线
+                    },
+                    type: 'category',
+                    axisLabel: {'interval': 0},
+                    data: setData.labelArr,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    splitLine: {
+                        lineStyle: {
+                            color: '#e4e4e4',
+                            type: 'dotted'
+                        }
+                    },
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: name,
+                    type: 'bar',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    barCategoryGap: '40%',
+                    barMaxWidth: 50,
+                    data: setData.valArr
+                }
+            ]
+        }
+    }
+    //取百分数
+    function percentNum(num, num2) {
+        if (!num || !num2) return 0;
+        return (Math.round(num / num2 * 10000) / 100.0 + "%"); //小数点后两位百分比
+    }
+</script>
+</body>
+</html>

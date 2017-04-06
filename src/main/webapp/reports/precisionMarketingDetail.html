@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>市场活动精准广告</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/touch.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/marketReport.css"/>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+    <script type="text/javascript" src="../js/GetQueryString.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <!--<script type="text/javascript" src="../js/touch.js"></script>-->
+</head>
+<body>
+<article class="nextSection">
+    <div class="slide_wrap">
+        <div id="viewport" class="viewport" style="width:100%;">
+            <section class="pageview step1">
+                <header>
+                    <h2>精准广告阶段</h2>
+                    <!--<a class="backBtn" href="marketWeeklyList.html">返回</a>-->
+                </header>
+                <div class="section section1">
+                    <h4>互联网广告</h4>
+                    <table class="inter_table">
+                        <thead>
+                        <tr>
+                            <th>渠道名称</th>
+                            <th>留档数量</th>
+                            <th>清洗后数量</th>
+                            <th>到店数量</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="section section2">
+                    <h4>客户留档比</h4>
+                    <div class="pie" id="cusFile"></div>
+                </div>
+                <div class="section section3">
+                    <h4>老客户预约</h4>
+                    <ul class="lis appointment">
+                        <li>
+                            <span class="bold">曝光次数</span>
+                            <span class="num"></span>
+                        </li>
+                        <li>
+                            <span class="bold">留档数量</span>
+                            <span class="num"></span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</article>
+<script>
+    $(function () {
+        var cusFileDom = document.getElementById('cusFile'); //客户留档饼图
+        var cusFileChart = echarts.init(cusFileDom);
+        /*var intoStore1Dom = document.getElementById('intoStore1'); //预约进店统计图
+        var intoStore1Chart = echarts.init(intoStore1Dom);*/
+        /*var numPieDom = document.getElementById('numPie'); //当前意向客户数量饼图
+        var numPieChart = echarts.init(numPieDom);
+        var firstNumDom = document.getElementById('firstNum'); //首次数量柱形图
+        var firstNumChart = echarts.init(firstNumDom);*/
+       /* var dealNumDom = document.getElementById('dealNum'); //成交数量统计图
+        var dealNumChart = echarts.init(dealNumDom);*/
+        var reportId=GetQueryString('reportId');
+        /*===精准广告阶段===*/
+        var $advTbody=$('.step1 .section1 table tbody');
+        var $appointment=$('.step1 .section3 .appointment li');
+        ajax_fn('get', AIM_url.report+'/accurateAdvertisement.do?marketActivityWeeklyReportId='+reportId, '', accurateAdvertisement);
+        function accurateAdvertisement(data){
+            console.log('精准广告--返回');
+            console.log(data);
+            var trStr='';
+            var totalNum=0;
+            var archivesArr=[];
+            var advertisements=data.advertisements;
+            var total1=0,total2=0,total3=0;
+            var totalHtml='';
+            $.each(advertisements,function(i,v){
+                trStr+='<tr><td>'+v.accessName+'</td><td>'+v.exposureTimes+'</td><td>'+v.clickNum+'</td><td>'+v.archivesNum+'</td></tr>';
+
+                total1+=Number(v.exposureTimes);
+                total2+=Number(v.clickNum);
+                total3+=Number(v.archivesNum);
+
+                totalNum+=v.archivesNum;
+                archivesArr.push({
+                    name:v.accessName,
+                    value:v.archivesNum
+                });
+            });
+            totalHtml='<tr><td>总　　计</td><td>'+total1+'</td><td>'+total2+'</td><td>'+total3+'</td></tr>';
+            console.log(total1,total2,total3);
+            $advTbody.html(trStr+totalHtml);
+            //添加老客户预约留档
+            if(data.oldCustomerArchivesNum){
+                totalNum+=data.oldCustomerArchivesNum;
+                archivesArr.push({
+                    name:'老客户预约',
+                    value:data.oldCustomerArchivesNum
+                });
+            }
+            $.each(archivesArr,function(i,v){
+                var percent=percentNum(v.value,totalNum);
+                v.name=v.name+':'+percent;
+                v.value=parseFloat(percent);
+            });
+            //console.log(archivesArr);
+            cusFileChart.setOption(pie_option(archivesArr,'42%',6));
+            if (window.screen.width >= 360) {
+                cusFileChart.setOption(pie_option(archivesArr,'60%',12));
+                cusFileChart.setOption(pie_option(archivesArr,'60%',12));
+            }
+            //老客户预约
+            if(data.oldCustomerShowNum==null || data.oldCustomerArchivesNum==null) return;
+            $appointment.eq(0).find('.num').text(data.oldCustomerShowNum);
+            $appointment.eq(1).find('.num').text(data.oldCustomerArchivesNum);
+        }
+        
+        
+
+    });
+    //返回饼图的option
+    function pie_option(setData,radius,len) {
+        return {
+            color: ['#5ab1ef', '#b6a2de', '#2ec7c9', '#d87a80','#ffb980'],
+            series: [
+                {
+                    name: '意向客户数量',
+                    type: 'pie',
+                    radius: radius,
+                    labelLine:{
+                        normal:{
+                            length:len
+                        }
+                    },
+                    data:setData
+                }
+            ]
+        }
+    }
+    //取百分数
+    function percentNum(num, num2) {
+        if (!num || !num2) return 0;
+        return (Math.round(num / num2 * 10000) / 100.0 + "%"); //小数点后两位百分比
+    }
+</script>
+</body>
+</html>

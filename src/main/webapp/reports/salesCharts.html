@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>销售排行榜</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="css/weui.min.css">-->
+    <style>
+        body {
+            font-size: 0.14rem;
+        }
+
+        .borderBtm {
+            border-bottom: 0.1rem solid #efeff4;
+        }
+
+        header h2 {
+            text-align: center;
+            font-size: 0.16rem;
+            height: 0.35rem;
+            line-height: 0.35rem;
+            background: #3dd2a3;
+            color: #fff;
+        }
+
+        section {
+            padding: 0.1rem 0.1rem;
+        }
+
+        .rank {
+            display: flex;
+            align-items: center;
+            margin-top: 0.1rem;
+        }
+
+        .rank .img {
+            flex: 1;
+        }
+
+        .rank .img img {
+            width: 100%;
+        }
+
+        .rank .txt {
+            flex: 2;
+            padding-left: 0.26rem;
+        }
+
+        .rank .txt p {
+            line-height: 0.22rem;
+        }
+
+        .rank .txt .item {
+            width: 0.56rem;
+            text-align: right;
+            display: inline-block;
+        }
+
+        table {
+            width: 100%;
+            /*border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;*/
+        }
+
+        tr {
+            /*border-bottom: 1px solid #ccc;*/
+        }
+
+        th, td {
+            text-align: center;
+            /*border-right: 1px solid #ccc;*/
+            padding: 0.06rem 0;
+        }
+
+        h3 {
+            font-weight: bold;
+            margin-bottom: 0.06rem;
+        }
+        .info_table td{
+            font-size:0.12rem;
+        }
+        .info_table tr td:nth-child(2){
+            text-align: left;
+            padding-left:0.34rem;
+        }
+        .info_table thead tr{
+            background: #a0a9b3;
+            color: #fff;
+        }
+        .info_table tbody tr:nth-child(odd){
+            background: #efeff4;
+        }
+        .info_table tbody tr:nth-child(even){
+            background: #f7f7f7;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+    <script type="text/javascript" src="../js/GetQueryString.js"></script>
+</head>
+<body>
+<header>
+    <h2>销售排行榜</h2>
+</header>
+<article>
+    <section class="borderBtm">
+        <div class="rank">
+            <div class="img">
+                <img src="../images/champion.png"/>
+            </div>
+            <div class="txt">
+                <p><span class="item">冠军姓名</span>：<span class="value"></span></p>
+                <p><span class="item">销量</span>：<span class="value"></span></p>
+                <p><span class="item">满意度</span>：<span class="value"></span></p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h3>全部顾问信息</h3>
+        <table class="info_table">
+            <thead>
+            <tr>
+                <th>排名</th>
+                <th>顾问姓名</th>
+                <th>销售量</th>
+                <th>满意度分值</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</article>
+<script>
+    $(function () {
+        var $rank_p = $('.rank .txt p');
+        var $tbody = $('.info_table tbody');
+        var rankingTypeId=GetQueryString('rankingTypeId');
+
+        ajax_fn('get',AIM_url.report+ '/salesRanking.do?rankingTypeId='+rankingTypeId, '', getSalesInfo);
+        function getSalesInfo(data) {
+            console.log(data);
+            var info_tr = '';
+            //销售冠军.
+
+            $rank_p.eq(0).find('.value').text(data.salesChampion);
+            $rank_p.eq(1).find('.value').text(data.salesVolume);
+            $rank_p.eq(2).find('.value').text(data.satisfactionDegree);
+            //顾问信息
+            $.each(data.salesConsultantList, function (i, v) {
+                info_tr += '<tr><td>'+(i+1)+'</td><td>'+v.consultantName+'</td><td>'+v.salesVolume+'</td><td>'+v.satisfactionDegree+'</td></tr>';
+            });
+            $tbody.html(info_tr);
+        }
+    })
+</script>
+</body>
+</html>

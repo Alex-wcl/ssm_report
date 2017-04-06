@@ -1,0 +1,184 @@
+body {font-size: 0.14rem;}
+header h2 {text-align: center;font-size: 0.16rem;height: 0.36rem;line-height: 0.36rem;background: #3dd2a3;color: #fff;}
+/*.step1 header {position: relative;width: 100%;height: 0.36rem;}*/
+/*.step1 header h2 {width: 100%;}
+.step1 header h2, .step1 header .backBtn { height: 100%; position: absolute; display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center;}
+a.backBtn { color: #fff; !*left: 0.1re top: 0.11rem;*! left: 0; top: 0; padding-left: 0.1rem;}
+.backBtn:before { content: ''; display: inline-block; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); height: .08rem; width: .08rem; border-color: #fff; border-style: solid; border-width: 0 0 .02rem .02rem;}*/
+.pageview .section { padding: 0 0.06rem; margin: 0.1rem 0; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+.step1 .section2{padding:0;}
+.pageview h3 { font-weight: bold; line-height: 0.24rem; padding: 0 0.06rem;}
+.pageview h4 { text-align: center; color: #00c789; line-height: 0.24rem;}
+.pageview h4.translate { -webkit-transform: translateY(0.26rem); -moz-transform: translateY(0.26rem); -ms-transform: translateY(0.26rem); -o-transform: translateY(0.26rem); transform: translateY(0.26rem);}
+table { width: 100%; border-top: 1px solid #e4e4e4; border-left: 1px solid #e4e4e4;}
+tr { border-bottom: 1px solid #e4e4e4;}
+th, td { text-align: center; border-right: 1px solid #e4e4e4; padding: 0.06rem 0;}
+th { font-weight: bold;}
+td { font-size: 0.12rem; padding: 0.04rem 0;}
+.pie, .chart { width: 100%; height: 200px; box-sizing: border-box; /*margin-top: -0.15rem;*/}
+.chart {  height: 260px;}
+.section .lis { border: 1px solid #e4e4e4; border-radius: 5px;}
+.section .lis li { display: flex; padding: 0.04rem 0.1rem; border-bottom: 1px solid #e4e4e4;}
+.section .lis li:last-child { border-bottom: none;}
+.section .lis li .bold { flex: 1;}
+.section .lis li .num { flex: 2; color: #ccc;}
+.step2 .section {margin: 0;}
+.step2 .section1 {margin-top: 0.1rem;}
+.step2 .section .lis li .bold {flex: 1;}
+.step2 .section .lis li .num {flex: 1;}
+.pageview .section .gray {font-size: 0.12rem;color: #ccc;text-align: center;margin-top: -0.04rem;margin-bottom: 0.04rem;}
+#numPie {  margin-top: 0;}
+.step3 .section2 .text { font-size: 0.10rem; line-height: 0.16rem; margin-top: 0.06rem;}
+.step3 .section2 .text:first-child {margin-top: 0.12rem;}
+.step3 .section2 .text .value { color: #ef4f4f; text-decoration: underline;}
+.step3 .section2 .text strong { font-weight: bold; color: #ef4f4f;}
+.step3 .cur_table th:nth-child(1) {width: 40%;}
+.step3 .cur_table th:nth-child(2),.step3 .cur_table th:nth-child(3) {width: 30%;}
+.step3 .cur_table td {padding: 0;}
+.step3 .cur_table table { border-top: 0; border-left: 0;}
+.step3 .cur_table table tr:last-child { border-bottom: 0;}
+.step3 .cur_table table td { width: 50%; word-break: break-all; padding: 0.04rem 0;}
+.step3 .cur_table table td:last-child {border-right: 0;}
+.step4 .section td { color: #666;}
+.step4 .section td .proportion {display: flex;}
+.step4 .section td .proportion span { flex: 1; text-align: left;}
+.step4 .section td .proportion .title { color: #333; font-weight: bold; font-size: 0.14rem; padding-left: 0.1rem;}
+.step4 .section1 {margin-top: -0.1rem;}
+.step4 .section2 {margin-top: 0.15rem;}
+.nextSection {width: 100%;}
+#cover { width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); position: fixed; top: 0; left: 0;z-index: 999;}
+#cover .post { position: absolute; bottom: 0.5rem; left: 0; width: 100%;}
+#cover .btn { color: #ff7474; border: 1px solid #ff7474; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background: none; padding: 0.02rem 0.04rem; font-size: 13px; margin-top: 12px;}
+#cover .tip p {background: -webkit-gradient(linear, left top, right top, color-stop(0, #fff), color-stop(.4, #fff), color-stop(.5, #666), color-stop(.6, #fff), color-stop(1, #fff)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; -webkit-animation: slidetounlock 3s infinite; -webkit-text-size-adjust: none; font-size: 15px;}
+.img_wrap { width: 100%; height: 0.5rem; margin-bottom: 1rem;}
+.img_wrap .narr { width: 0.32rem; position: absolute; left: 10%; -webkit-animation: narrAnimation 5s infinite; -moz-animation: narrAnimation 5s infinite; -ms-animation: narrAnimation 5s infinite; -o-animation: narrAnimation 5s infinite; animation: narrAnimation 5s infinite;}
+@-webkit-keyframes slidetounlock {
+    0% {
+        background-position: -2rem 0
+    }
+    100% {
+        background-position: 2rem 0
+    }
+}
+@-moz-keyframes slidetounlock {
+    0% {
+        background-position: -2rem 0
+    }
+    100% {
+        background-position: 2rem 0
+    }
+}
+@-ms-keyframes slidetounlock {
+    0% {
+        background-position: -2rem 0
+    }
+    100% {
+        background-position: 2rem 0
+    }
+}
+@-o-keyframes slidetounlock {
+    0% {
+        background-position: -2rem 0
+    }
+    100% {
+        background-position: 2rem 0
+    }
+}
+@keyframes slidetounlock {
+    0% {
+        background-position: -2rem 0
+    }
+    100% {
+        background-position: 2rem 0
+    }
+}
+@-webkit-keyframes narrAnimation {
+    0% {
+        left: 80%;
+    }
+    25% {
+        left: 10%;
+    }
+    50% {
+        left: 80%;
+    }
+    75% {
+        left: 10%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+@-moz-keyframes narrAnimation {
+    0% {
+        left: 80%;
+    }
+    25% {
+        left: 10%;
+    }
+    50% {
+        left: 80%;
+    }
+    75% {
+        left: 10%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+@-ms-keyframes narrAnimation {
+    0% {
+        left: 80%;
+    }
+    25% {
+        left: 10%;
+    }
+    50% {
+        left: 80%;
+    }
+    75% {
+        left: 10%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+@-o-keyframes narrAnimation {
+    0% {
+        left: 80%;
+    }
+    25% {
+        left: 10%;
+    }
+    50% {
+        left: 80%;
+    }
+    75% {
+        left: 10%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+@keyframes narrAnimation {
+    0% {
+        left: 80%;
+    }
+    25% {
+        left: 10%;
+    }
+    50% {
+        left: 80%;
+    }
+    75% {
+        left: 10%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+#cover .tip {width: 100%; text-align: center;}
+@media all and (min-width:414px) {
+    .pie{height:220px;}
+    .chart{height:280px;}
+}

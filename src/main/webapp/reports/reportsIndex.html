@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>报表首页</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <style>
+        body {
+            font-size: 0.14rem;
+        }
+        header{
+            width: 100%;
+            height: 1.4rem;
+            background: url("../images/reports_bg.JPG") no-repeat;
+            background-size: cover;
+        }
+        nav{
+            padding: 0 0.1rem;
+        }
+        .items{
+            display: flex;
+            align-items: center;
+            padding: 0.1rem 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .items .img{
+            width:0.36rem;
+            height:0.36rem;
+            background:url("../images/report_icon.png") no-repeat;
+            background-size: 100%;
+            margin-right: 0.2rem;
+        }
+        .items .txt{
+
+        }
+        .items .txt h4{
+            font-size:0.16rem;
+            font-weight: bold;
+            line-height: 0.24rem;
+        }
+        .items .txt p{
+            font-size: 0.12rem;
+            color: #a5a5a5;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+    <script type="text/javascript" src="../js/GetQueryString.js"></script>
+</head>
+<body>
+    <header></header>
+    <nav>
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="precisionMarketingList.html">
+                    <h4>精准广告</h4>
+                    <p>精准广告</p>
+                </a>
+            </div>
+        </div>
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="marketWeeklyList.html">
+                    <h4>市场活动报表</h4>
+                    <!--<p>市场活动统计报表，按日结转，默认最新</p>-->
+                    <p>市场活动统计报表</p>
+                </a>
+            </div>
+        </div>
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="marketTotalList.html">
+                    <h4>市场活动总报表</h4>
+                    <p>市场活动统计总报表</p>
+                </a>
+            </div>
+        </div>
+        <!--<div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <h4>HABC变化报表</h4>
+                <p>统计市场活动意向客户有望确度的变化</p>
+            </div>
+        </div>-->
+        <!-- 
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="competitionList.html">
+                    <h4>竞争成交比报表</h4>
+                    <p>竞争成交比按周结转，同时统计累计信息</p>
+                </a>
+            </div>
+        </div>
+         -->
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="salesChartsList.html">
+                    <h4>销售排行榜</h4>
+                    <p>查看销售顾问的销量排行榜信息</p>
+                </a>
+            </div>
+        </div>
+        <!-- 
+        <div class="items">
+            <div class="img"></div>
+            <div class="txt">
+                <a href="investigationList.html">
+                    <h4>试驾问卷报表</h4>
+                    <p>查看各个关注点的满意度信息</p>
+                </a>
+            </div>
+        </div>
+         -->
+    </nav>
+<script>
+    var dealerId=GetQueryString('dealerId');
+    var $items=$('nav .items');
+    $items.each(function(){
+        var $href=$(this).find('a').attr('href');
+        $(this).find('a').attr('href',$href+'?dealerId='+dealerId);
+    })
+</script>
+</body>
+</html>

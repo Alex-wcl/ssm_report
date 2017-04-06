@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>市场活动总报表列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/reportsList.css"/>
+    <style>
+        .fold .lis .itmes {border-bottom: 5px solid #efeff4;height: 0.32rem;line-height: 0.32rem;padding-left: 0.1rem;font-weight: bold;}
+        .fold .lis .itmes a{display: block;}
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+</head>
+<body>
+<header>
+    <h2>市场活动总报表</h2>
+</header>
+<article class="fold">
+    <ul class="lis">
+    </ul>
+</article>
+<script>
+    var $lis=$('.fold .lis');
+    ajax_fn('get',AIM_url.report+ '/marketActivityTotalList.do', '', marketActivityTotalList);
+    function marketActivityTotalList(data) {
+        console.log(data);
+        var htmlStr='';
+        $.each(data,function(i,v){
+            htmlStr+='<li class="itmes"><a href="marketTotalDetail.html?reportId='+v.marketActivityReportId+'">'+v.marketActivityName+'</a></li>';
+        });
+        $lis.html(htmlStr);
+    }
+</script>
+</body>
+</html>

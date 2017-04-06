@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>市场活动周精准广告列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/reportsList.css"/>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+</head>
+<body>
+<header>
+    <h2>市场活动精准广告</h2>
+</header>
+<article class="fold">
+    <ul class="lis">
+    </ul>
+</article>
+<script>
+    $(function () {
+        //点击列表展开效果
+        $('.fold .lis').on('click', '.title', function () {
+            if ($(this).siblings(".information").css("display") == "none") {
+                $(this).addClass("cur").siblings(".information").slideDown(200).parent().siblings().children(".title").removeClass("cur").siblings(".information").slideUp(200);
+            } else {
+                $(this).removeClass("cur").siblings(".information").slideUp(200);
+            }
+        });
+        var $lis=$('.fold .lis');
+        ajax_fn('get',AIM_url.report+ '/marketActivityWeekList.do', '', marketActivityWeekList);
+        function marketActivityWeekList(data) {
+            console.log(data);
+            var htmlStr='';
+            $.each(data,function(i,v){
+                var weekStr='';
+                var len=v.marketActivityWeeklyReportIds.length;
+                /*$.each(v.marketActivityWeeklyReportIds,function(i1,v1){
+                    weekStr+='<p><a href="precisionMarketingDetail.html?reportId='+v1+'">第'+(len-i1)+'周精准广告</a></p>';
+                });*/
+                $.each(v.marketActivityWeeklyReportIds,function(i1,v1){
+                    if(i1==0){
+                        weekStr='<p><a href="precisionMarketingDetail.html?reportId='+v1+'">最新精准广告</a></p>';
+                    }
+                });
+                htmlStr+='<li class="itmes"><div class="title"><h4>'+v.marketActivityName+'</h4></div><div class="information">'+weekStr+'</div></li>';
+            });
+            $lis.html(htmlStr);
+            /*$('.fold .lis .information').find('p:eq(0) a').text('最新精准广告');*/
+        }
+
+    });
+
+</script>
+</body>
+</html>

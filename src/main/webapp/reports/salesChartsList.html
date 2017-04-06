@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>销售排行榜列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/reportsList.css"/>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/mobile_rem.js"></script>
+    <script type="text/javascript" src="../js/ajax_fn.js"></script>
+    <script type="text/javascript" src="../js/GetQueryString.js"></script>
+</head>
+<body>
+<header>
+    <h2>销售排行榜</h2>
+</header>
+<article class="fold">
+    <ul class="lis"></ul>
+</article>
+<script>
+    $(function(){
+        var dealerId=GetQueryString('dealerId');
+        var $lis=$('.fold .lis');
+
+        //获取月份信息
+        var liStr='';
+        ajax_fn('get',AIM_url.report+ '/salesRankingList.do?dealerId=1baf88c0-7404-11e6-8da9-005056af50a8', '', getSalesMonth);
+        function getSalesMonth(data){
+            console.log(data);
+            $.each(data,function(i,v){
+                var arr=v.split('-');
+                var day = new Date(arr[0],arr[1],0);
+                //获取天数：
+                var daycount = day.getDate();
+                liStr+='<li class="itmes" date='+v+'><div class="title"><h4>'+arr[1]+'月销量排行榜</h4><p class="date"><span>开始时间: '+(v+'-1')+'</span><span>结束时间: '+(v+'-'+daycount)+'</span></p></div><div class="information"></div></li>'
+            });
+            $lis.html(liStr);
+
+        }
+
+        $lis.on('click', '.title', function () {
+            var date=$(this).parent().attr('date');
+            var vehicleStr='';
+            //点击列表展开效果
+            if ($(this).siblings(".information").css("display") == "none") {
+                $(this).addClass("cur").siblings(".information").slideDown(200).parent().siblings().children(".title").removeClass("cur").siblings(".information").slideUp(200);
+            } else {
+                $(this).removeClass("cur").siblings(".information").slideUp(200);
+            }
+            ajax_fn('get',AIM_url.report+ '/salesVehicleModels.do?salesDate='+date+'&dealerId=1baf88c0-7404-11e6-8da9-005056af50a8', '', getVehicleModels);
+            function getVehicleModels(data1){
+                console.log(data1);
+                $.each(data1,function(i,v){
+                    vehicleStr+='<p><a href="salesCharts.html?rankingTypeId='+v.rankingTypeId+'">'+v.vehicleModelName+'销量排行榜</a></p>';
+                });
+                $lis.find('.information').html(vehicleStr);
+
+            }
+        });
+
+    });
+
+
+</script>
+</body>
+</html>
